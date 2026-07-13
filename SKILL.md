@@ -1,7 +1,7 @@
 ---
 name: link-digest
-description: 收到链接后提取正文、结构化总结、闭环逻辑拆解、MiniMax TTS 高品质语音播报，通过飞书推送（语音+文字摘要同发），实现"听文章"学习闭环。
-version: 2.1
+description: 收到链接后提取正文、结构化总结、闭环逻辑拆解、MiniMax TTS 高品质语音播报（大Joe定制克隆声音，1.2倍速），通过飞书推送（语音+文字摘要同发），实现"听文章"学习闭环。✅ 已定型。
+version: 3.0
 created: 2026-07-13
 updated: 2026-07-13
 author: William (JoeVise 分身)
@@ -82,7 +82,7 @@ payload = {
     "stream": False,
     "language_boost": "Chinese",
     "voice_setting": {
-        "voice_id": "Chinese (Mandarin)_Reliable_Executive",  # 沉稳可靠男声（默认，大Joe确认版）
+        "voice_id": "moss_audio_9c223de9-7ce1-11f0-9b9f-463feaa3106a",  # 大Joe定版自定义克隆男声（最终确认）2026-07-13
         "speed": 1.2,  # 大Joe要求：1.2倍速
         "vol": 1.0,
         "pitch": 0
@@ -109,18 +109,20 @@ data = resp.json()
 if data["base_resp"]["status_code"] == 0:
     audio_hex = data["data"]["audio"]
     audio_bytes = bytes.fromhex(audio_hex)
-    with open("output.mp3", "wb") as f:\n        f.write(audio_bytes)\n```\n\n**默认声音配置（已确认，2026-07-13）**：
-- `voice_id`: `Chinese (Mandarin)_Reliable_Executive`（可靠高管，沉稳男声）
+    with open("output.mp3", "wb") as f:
+        f.write(audio_bytes)
+```
+
+**默认声音配置（已定版，2026-07-13）**：
+- `voice_id`: `moss_audio_9c223de9-7ce1-11f0-9b9f-463feaa3106a`（大Joe定制自定义克隆男声，经多次试听确认）
 - `speed`: `1.2`
 
-**其他可选中文声音**（真实 system voice_id，需要 `Chinese (Mandarin)_` 前缀）：
-- `Chinese (Mandarin)_Reliable_Executive` — 可靠高管（默认，沉稳）
-- `Chinese (Mandarin)_News_Anchor` — 新闻主播
-- `Chinese (Mandarin)_Gentleman` — 绅士
-- `Chinese (Mandarin)_Male_Announcer` — 男播音员
-- `Chinese (Mandarin)_Radio_Host` — 电台主持人
-- 完整声音列表：https://platform.minimax.io/docs/faq/system-voice-id
-- ⚠️ 注意：`male-qn-qingse` 等旧版声音ID格式已不存在（会报 `voice id not exist`），必须用上面文档的真实ID
+**声音选型试听记录**（供以后参考，不再使用）：
+- ~~`male-qn-qingse`~~ — 旧版ID格式已失效
+- ~~`Chinese (Mandarin)_Reliable_Executive`~~ — 可靠高管男声，沉稳但非最终选择
+- ~~`Chinese (Mandarin)_Mature_Woman`~~ — 大Joe试过后觉得不行
+- ✅ `moss_audio_9c223de9-7ce1-11f0-9b9f-463feaa3106a` — **最终定版**（自定义克隆声音）
+- 完整系统声音列表（备用）：https://platform.minimax.io/docs/faq/system-voice-id
 
 ### Step 4 — 转换 Opus + 飞书发送
 
@@ -185,8 +187,16 @@ lark-cli im +messages-send \
 - `lark-cli` (william profile) — 飞书消息发送
 - `closed-loop-logic-extraction` (方法论借鉴) — 闭环逻辑拆解
 
+## ✅ Skill 已定型（2026-07-13）
+
+经大Joe多轮试听确认，此 Skill 正式定型，默认配置为：
+- **声音**: `moss_audio_9c223de9-7ce1-11f0-9b9f-463feaa3106a`（大Joe定制克隆声）
+- **语速**: `1.2`倍速
+- **交付方式**: 语音+文字摘要同发
+
 ## 更新历史
 
+- v3.0（2026-07-13）: ✅ **正式定型**，默认声音改为大Joe定制的自定义克隆声 `moss_audio_9c223de9-7ce1-11f0-9b9f-463feaa3106a`
 - v2.2 (2026-07-13): 语速从1.3调整为1.2倍速（大Joe反馈1.3偏快）
 - v2.1 (2026-07-13): 声音改为 `Chinese (Mandarin)_Reliable_Executive`（沉稳男声），语速改为1.3倍速；明确要求语音+文字摘要必须同时发送
 - v2.0 (2026-07-13): 升级 TTS 从 Edge TTS 到 MiniMax speech-02-hd
