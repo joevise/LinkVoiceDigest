@@ -27,10 +27,13 @@ author: William (JoeVise 分身)
 优先级：
 1. `tavily_extract`（处理 JS 渲染页面、公众号效果好，用 extract_depth=advanced）
 2. `web_fetch`（轻量提取，备用）
+3. **密塔阅读器（Metaso Reader）** — tavily_extract 遇到微信滑块验证码/环境异常时的最终备用方案，对公众号穿透率更高：
+   ```bash
+   curl -s -X POST "https://metaso.cn/api/v1/reader" -H "Authorization: Bearer mk-DA5C2447D54689CD7757A0C4AB162CA3" -H "Content-Type: application/json" -d '{"url":"目标URL"}'
+   ```
+   返回 JSON 包含 title/author/date/markdown（完整正文）
 
-- 公众号链接（mp.weixin.qq.com）必须用 tavily_extract + advanced
-- 如果提取失败，尝试备用方案
-- 明确失败原因，不瞎编
+- 公众号链接（mp.weixin.qq.com）先用 tavily_extract + advanced，若报"环境异常"/需验证则换密塔 Reader
 
 ### Step 2 — 结构化总结（文字版，必须与语音一起发送）
 
