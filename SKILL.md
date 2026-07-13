@@ -83,7 +83,7 @@ payload = {
     "language_boost": "Chinese",
     "voice_setting": {
         "voice_id": "Chinese (Mandarin)_Reliable_Executive",  # 沉稳可靠男声（默认，大Joe确认版）
-        "speed": 1.3,  # 大Joe要求：1.3倍速
+        "speed": 1.2,  # 大Joe要求：1.2倍速
         "vol": 1.0,
         "pitch": 0
     },
@@ -111,7 +111,7 @@ if data["base_resp"]["status_code"] == 0:
     audio_bytes = bytes.fromhex(audio_hex)
     with open("output.mp3", "wb") as f:\n        f.write(audio_bytes)\n```\n\n**默认声音配置（已确认，2026-07-13）**：
 - `voice_id`: `Chinese (Mandarin)_Reliable_Executive`（可靠高管，沉稳男声）
-- `speed`: `1.3`
+- `speed`: `1.2`
 
 **其他可选中文声音**（真实 system voice_id，需要 `Chinese (Mandarin)_` 前缀）：
 - `Chinese (Mandarin)_Reliable_Executive` — 可靠高管（默认，沉稳）
@@ -187,6 +187,7 @@ lark-cli im +messages-send \
 
 ## 更新历史
 
+- v2.2 (2026-07-13): 语速从1.3调整为1.2倍速（大Joe反馈1.3偏快）
 - v2.1 (2026-07-13): 声音改为 `Chinese (Mandarin)_Reliable_Executive`（沉稳男声），语速改为1.3倍速；明确要求语音+文字摘要必须同时发送
 - v2.0 (2026-07-13): 升级 TTS 从 Edge TTS 到 MiniMax speech-02-hd
 - v1.0 (2026-07-13): 初始版本，使用 Edge TTS
